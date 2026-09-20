@@ -1,0 +1,203 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.expense-form {
+  padding: 1.5rem;
+}
+
+.form-header {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.form-header h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.form-description {
+  margin: 0.4rem 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.form-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-field-full {
+  grid-column: 1 / -1;
+}
+
+.field-label {
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.field-label-hint {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.input-with-prefix {
+  position: relative;
+}
+
+.input-prefix {
+  position: absolute;
+  top: 50%;
+  left: 0.85rem;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.input-with-prefix input {
+  padding-left: 3.1rem;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  box-sizing: border-box;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.92rem;
+  outline: none;
+  padding: 0.6rem 0.8rem;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+textarea {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
+}
+
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border-color: var(--color-danger);
+}
+
+.field-error {
+  color: var(--color-danger);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.field-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.char-count {
+  margin-left: auto;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+button {
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.65rem 1.15rem;
+  transition:
+    background 150ms ease,
+    transform 150ms ease,
+    opacity 150ms ease;
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.submit-button {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-strong));
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.32);
+  color: #ffffff;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--color-accent-strong), var(--color-accent-strong));
+}
+
+.submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.cancel-button {
+  background: var(--color-surface-strong);
+  color: var(--color-text-secondary);
+}
+
+.cancel-button:hover {
+  background: #f1f5f9;
+}
+
+@media (max-width: 600px) {
+  .expense-form {
+    padding: 1.1rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

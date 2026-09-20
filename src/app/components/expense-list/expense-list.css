@@ -1,0 +1,334 @@
+:host {
+  display: block;
+  min-width: 0;
+  width: 100%;
+}
+
+.expense-list {
+  width: 100%;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.section-header h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.running-total {
+  display: flex;
+  min-width: 10rem;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  padding: 0.8rem 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-xs);
+}
+
+.total-label {
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.running-total strong {
+  color: var(--color-accent-strong);
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: minmax(9rem, 1fr) minmax(12rem, 1.6fr) minmax(8rem, 1fr) minmax(8rem, 1fr);
+  align-items: end;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+}
+
+.control-group {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.control-group select,
+.control-group input {
+  width: 100%;
+  min-height: 2.6rem;
+  box-sizing: border-box;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.88rem;
+  outline: none;
+  padding: 0.5rem 0.7rem;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.control-group select:focus,
+.control-group input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-sm);
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 0.85rem;
+}
+
+.retry-button {
+  border: 1px solid #fca5a5;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  color: #b91c1c;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.35rem 0.7rem;
+}
+
+.expense-list-content {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.expense-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  transition:
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.expense-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.expense-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.9rem;
+  max-width: 100%;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-full);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-strong);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.expense-details {
+  min-width: 0;
+}
+
+.expense-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.expense-title-row h3 {
+  overflow: hidden;
+  margin: 0 0 0.35rem;
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.expense-amount {
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.expense-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+
+.expense-meta time {
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.expense-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.expense-actions button {
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.5rem 0.7rem;
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.edit-button {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-strong);
+}
+
+.edit-button:hover {
+  background: #e0e7ff;
+}
+
+.delete-button {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.delete-button:hover {
+  background: #fecaca;
+}
+
+.loading-state,
+.empty-state {
+  display: flex;
+  min-height: 13rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 2rem;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.spinner {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 3px solid var(--color-accent-soft);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-state p,
+.empty-state p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.empty-state h3 {
+  margin: 0.35rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+}
+
+.empty-icon {
+  font-size: 2.1rem;
+}
+
+@media (max-width: 1050px) {
+  .controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .section-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .running-total {
+    align-items: flex-start;
+  }
+
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .expense-card {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .expense-actions {
+    grid-column: 2;
+  }
+
+  .expense-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+}

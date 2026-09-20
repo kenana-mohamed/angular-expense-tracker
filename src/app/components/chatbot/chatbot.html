@@ -1,0 +1,117 @@
+<button
+  type="button"
+  class="chat-toggle"
+  [class.chat-toggle-open]="isOpen()"
+  (click)="toggleChat()"
+  [attr.aria-expanded]="isOpen()"
+  aria-controls="expense-chat-window"
+  aria-label="Toggle expense assistant"
+>
+  @if (isOpen()) {
+    <span class="chat-toggle-icon" aria-hidden="true">×</span>
+  } @else {
+    <span class="chat-toggle-icon" aria-hidden="true">💬</span>
+  }
+
+  @if (!isOpen()) {
+    <span class="chat-toggle-label">Ask AI</span>
+  }
+</button>
+
+@if (isOpen()) {
+  <section
+    id="expense-chat-window"
+    class="chat-window glass-card"
+    aria-labelledby="chatbot-title"
+  >
+    <header class="chatbot-header">
+      <div class="assistant-avatar" aria-hidden="true">✦</div>
+
+      <div class="assistant-heading">
+        <h2 id="chatbot-title">Expense Assistant</h2>
+        <p>Ask me about your spending</p>
+      </div>
+
+      <span class="online-indicator" aria-label="Assistant online"></span>
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="closeChat()"
+        aria-label="Close expense assistant"
+      >
+        ×
+      </button>
+    </header>
+
+    <div
+      #messageHistory
+      class="message-history"
+      aria-live="polite"
+      aria-label="Chat message history"
+    >
+      @for (message of messages(); track message.id) {
+        <div
+          class="message-row"
+          [class.user-row]="message.role === 'user'"
+          [class.assistant-row]="message.role === 'assistant'"
+        >
+          <div
+            class="message-bubble"
+            [class.user-message]="message.role === 'user'"
+            [class.assistant-message]="message.role === 'assistant'"
+          >
+            <p>{{ message.content }}</p>
+
+            <time [attr.datetime]="message.createdAt.toISOString()">
+              {{ message.createdAt | date: 'shortTime' }}
+            </time>
+          </div>
+        </div>
+      }
+
+      @if (isLoading()) {
+        <div class="message-row assistant-row">
+          <div
+            class="message-bubble assistant-message loading-message"
+            aria-label="Assistant is typing"
+          >
+            <span class="loading-dot"></span>
+            <span class="loading-dot"></span>
+            <span class="loading-dot"></span>
+          </div>
+        </div>
+      }
+    </div>
+
+    @if (errorMessage()) {
+      <p class="error-message" role="alert">{{ errorMessage() }}</p>
+    }
+
+    <form class="chat-input-area" (submit)="sendMessage($event)">
+      <label class="visually-hidden" for="chat-message-input">
+        Message the expense assistant
+      </label>
+
+      <input
+        id="chat-message-input"
+        type="text"
+        name="message"
+        [value]="draft()"
+        (input)="onDraftChange($event)"
+        placeholder="Ask about your expenses..."
+        autocomplete="off"
+        [disabled]="isLoading()"
+      />
+
+      <button
+        type="submit"
+        [disabled]="isLoading() || !draft().trim()"
+        aria-label="Send message"
+      >
+        <span aria-hidden="true">➤</span>
+        <span class="send-label">Send</span>
+      </button>
+    </form>
+  </section>
+}

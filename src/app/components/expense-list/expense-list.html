@@ -1,0 +1,141 @@
+<section class="expense-list" aria-labelledby="expense-list-title">
+  <div class="section-header">
+    <div>
+      <p class="eyebrow">Your spending</p>
+      <h2 id="expense-list-title">Expenses</h2>
+    </div>
+
+    <div class="running-total" aria-label="Running total">
+      <span class="total-label">Running total</span>
+      <strong>{{ runningTotal() | currency: 'EGP' : 'symbol' : '1.2-2' }}</strong>
+    </div>
+  </div>
+
+  @if (expenseService.error(); as errorMessage) {
+    <div class="error-banner" role="alert">
+      <span>{{ errorMessage }}</span>
+      <button type="button" class="retry-button" (click)="retryLoad()">
+        Retry
+      </button>
+    </div>
+  }
+
+  <div class="controls glass-card" aria-label="Expense filters and sorting">
+    <label class="control-group">
+      <span>Category</span>
+
+      <select
+        [value]="selectedCategory()"
+        (change)="onCategoryChange($event)"
+        aria-label="Filter expenses by category"
+      >
+        @for (categoryOption of categoryOptions; track categoryOption) {
+          <option [value]="categoryOption">{{ categoryOption }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="control-group search-control">
+      <span>Search notes</span>
+
+      <input
+        type="search"
+        [value]="searchQuery()"
+        (input)="onSearchChange($event)"
+        placeholder="Search expenses..."
+        aria-label="Search expense notes"
+      />
+    </label>
+
+    <label class="control-group">
+      <span>Sort by</span>
+
+      <select
+        [value]="sortBy()"
+        (change)="onSortByChange($event)"
+        aria-label="Sort expenses by"
+      >
+        <option value="date">Date</option>
+        <option value="amount">Amount</option>
+      </select>
+    </label>
+
+    <label class="control-group">
+      <span>Order</span>
+
+      <select
+        [value]="sortOrder()"
+        (change)="onSortOrderChange($event)"
+        aria-label="Sort order"
+      >
+        <option value="desc">Descending</option>
+        <option value="asc">Ascending</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="expense-list-content">
+    @if (expenseService.loading()) {
+      <div class="loading-state" role="status" aria-live="polite">
+        <span class="spinner" aria-hidden="true"></span>
+        <p>Loading your expenses…</p>
+      </div>
+    } @else {
+      @for (expense of filteredExpenses(); track expense.id) {
+        <article
+          class="expense-card glass-card"
+          [appHighlightOverBudget]="expense.amount"
+          [threshold]="budgetThreshold"
+        >
+          <div class="expense-icon" aria-hidden="true">
+            {{ expense.category | categoryIcon }}
+          </div>
+
+          <div class="expense-details">
+            <div class="expense-title-row">
+              <h3>{{ expense.note || 'Untitled expense' }}</h3>
+
+              <strong class="expense-amount">
+                {{ expense.amount | currency: 'EGP' : 'symbol' : '1.2-2' }}
+              </strong>
+            </div>
+
+            <div class="expense-meta">
+              <time [attr.datetime]="expense.date">
+                {{ expense.date | date: 'mediumDate' }}
+              </time>
+            </div>
+          </div>
+
+          <div class="expense-actions">
+            <button
+              type="button"
+              class="edit-button"
+              (click)="editExpense(expense)"
+              [attr.aria-label]="'Edit ' + (expense.note || 'expense')"
+            >
+              Edit
+            </button>
+
+            <button
+              type="button"
+              class="delete-button"
+              (click)="deleteExpense(expense.id)"
+              [attr.aria-label]="'Delete ' + (expense.note || 'expense')"
+            >
+              Delete
+            </button>
+          </div>
+        </article>
+      } @empty {
+        <div class="empty-state">
+          <div class="empty-icon" aria-hidden="true">🧾</div>
+          <h3>No expenses found</h3>
+          <p>
+            Try changing your filters, or add a new expense to see it here.
+          </p>
+        </div>
+      }
+    }
+  </div>
+</section>

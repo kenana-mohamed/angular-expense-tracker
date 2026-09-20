@@ -1,0 +1,127 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="expense-form glass-card"
+  novalidate
+>
+  <div class="form-header">
+    <p class="eyebrow">Track spending</p>
+    <h2 id="expense-form-title">
+      {{ isEditing() ? 'Edit Expense' : 'Add Expense' }}
+    </h2>
+    <p class="form-description">
+      {{
+        isEditing()
+          ? 'Update the details below and save your changes.'
+          : 'Record a purchase to keep your expense history up to date.'
+      }}
+    </p>
+  </div>
+
+  <div class="form-grid">
+    <label class="form-field">
+      <span class="field-label">Amount</span>
+
+      <div class="input-with-prefix">
+        <span class="input-prefix" aria-hidden="true">EGP</span>
+        <input
+          type="number"
+          formControlName="amount"
+          inputmode="decimal"
+          min="0"
+          step="0.01"
+          placeholder="0.00"
+          aria-describedby="amount-error"
+        />
+      </div>
+
+      @if (amount.invalid && (amount.touched || amount.dirty)) {
+        <span id="amount-error" class="field-error">
+          @if (amount.errors?.['required']) {
+            Amount is required.
+          } @else if (amount.errors?.['min']) {
+            Amount must be greater than 0.
+          }
+        </span>
+      }
+    </label>
+
+    <label class="form-field">
+      <span class="field-label">Category</span>
+
+      <select formControlName="category" aria-describedby="category-error">
+        @for (categoryOption of categories; track categoryOption) {
+          <option [value]="categoryOption">{{ categoryOption }}</option>
+        }
+      </select>
+
+      @if (category.invalid && (category.touched || category.dirty)) {
+        <span id="category-error" class="field-error">
+          Please choose a category.
+        </span>
+      }
+    </label>
+
+    <label class="form-field">
+      <span class="field-label">Date</span>
+
+      <input
+        type="date"
+        formControlName="date"
+        [max]="maxDate"
+        aria-describedby="date-error"
+      />
+
+      @if (date.invalid && (date.touched || date.dirty)) {
+        <span id="date-error" class="field-error">
+          @if (date.errors?.['required']) {
+            Date is required.
+          } @else if (date.errors?.['futureDate']) {
+            Date cannot be in the future.
+          } @else if (date.errors?.['invalidDate']) {
+            Please enter a valid date.
+          }
+        </span>
+      }
+    </label>
+
+    <label class="form-field form-field-full">
+      <span class="field-label">Note <span class="field-label-hint">(optional)</span></span>
+
+      <textarea
+        formControlName="note"
+        rows="3"
+        maxlength="200"
+        placeholder="What was this expense for?"
+        aria-describedby="note-error note-count"
+      ></textarea>
+
+      <div class="field-meta">
+        @if (note.invalid && (note.touched || note.dirty)) {
+          <span id="note-error" class="field-error">
+            Note must be 200 characters or fewer.
+          </span>
+        }
+        <span id="note-count" class="char-count">
+          {{ note.value?.length ?? 0 }}/200
+        </span>
+      </div>
+    </label>
+  </div>
+
+  <div class="form-actions">
+    @if (isEditing()) {
+      <button
+        type="button"
+        class="cancel-button"
+        (click)="onCancelEdit()"
+      >
+        Cancel
+      </button>
+    }
+
+    <button type="submit" class="submit-button" [disabled]="form.invalid">
+      {{ isEditing() ? 'Update Expense' : 'Add Expense' }}
+    </button>
+  </div>
+</form>

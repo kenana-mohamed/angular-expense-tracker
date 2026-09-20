@@ -1,0 +1,97 @@
+{
+  "name": "Expense Tracker AI Chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "expense-chatbot",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "79973a9f-9a8c-4556-bd97-98763b79c73b",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-420, 260],
+      "webhookId": "fe5983d0-ea7f-4eb4-931c-4f3d3d385a06"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.message }}",
+        "options": {
+          "systemMessage": "You are a friendly, practical financial advisor and personal expense assistant embedded in the user's Expense Tracker app.\n\nThe user's expenses are provided below as a JSON array. Each expense object has:\n- id: number\n- amount: number (in the user's currency)\n- category: one of \"Food\", \"Transport\", \"Shopping\", \"Bills\", \"Entertainment\", \"Other\"\n- date: string (YYYY-MM-DD)\n- note: optional string\n\nEXPENSES:\n{{ JSON.stringify($json.body.expenses) }}\n\nAnswer the user's message using ONLY these expenses as the source of truth. Do whatever the user asks that is possible:\n- Compute totals, per-category breakdowns, averages, or month-over-month trends.\n- Compare spending against a sensible budget and give practical saving tips.\n- If the user asks for general advice, give short, concrete, encouraging recommendations.\n\nRules:\n- Always ground your answer in the provided expenses; never invent expenses.\n- If the expenses array is empty, say so and suggest categories to start tracking.\n- Keep replies brief and scannable (typically 2-6 sentences unless the user asks for detail). Use plain text with no markdown headers or JSON.\n- Be warm, concise, and non-judgmental."
+        }
+      },
+      "id": "4c7cfbdf-caac-4136-88aa-ca2380922784",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [-90, 260]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "5891ca4f-e970-4acc-84d4-e041f96879ac",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [100, 80]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { reply: $json.output } }}",
+        "options": {}
+      },
+      "id": "d5be8ed4-14bf-4d3e-a776-b3a0dc7eca6f",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [240, 260]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {},
+  "active": false,
+  "tags": []
+}

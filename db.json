@@ -15,13 +15,6 @@
       "note": "Uber ride to the airport"
     },
     {
-      "id": "3",
-      "amount": 320,
-      "category": "Shopping",
-      "date": "2026-09-15",
-      "note": "New running shoes"
-    },
-    {
       "id": "4",
       "amount": 1200,
       "category": "Bills",

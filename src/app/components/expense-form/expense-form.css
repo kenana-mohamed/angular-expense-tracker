@@ -170,7 +170,7 @@ button:active:not(:disabled) {
 
 .submit-button {
   background: linear-gradient(135deg, var(--color-accent), var(--color-accent-strong));
-  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.32);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
   color: #ffffff;
 }
 
@@ -189,7 +189,7 @@ button:active:not(:disabled) {
 }
 
 .cancel-button:hover {
-  background: #f1f5f9;
+  background: rgba(255, 255, 255, 0.14);
 }
 
 @media (max-width: 600px) {

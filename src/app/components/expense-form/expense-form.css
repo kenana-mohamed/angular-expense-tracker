@@ -121,6 +121,11 @@ textarea.ng-invalid.ng-touched {
   border-color: var(--color-danger);
 }
 
+select option {
+  background-color: #1e293b;
+  color: #f8fafc;
+}
+
 .field-error {
   color: var(--color-danger);
   font-size: 0.78rem;

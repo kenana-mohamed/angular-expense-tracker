@@ -23,8 +23,8 @@ describe('ExpenseListComponent', () => {
 
   it('filters and totals expenses reactively', () => {
     component.expenseService.expenses.set([
-      { id: 1, amount: 10, category: 'Food', date: '2026-09-01', note: 'Lunch' },
-      { id: 2, amount: 20, category: 'Bills', date: '2026-09-02' },
+      { id: '1', amount: 10, category: 'Food', date: '2026-09-01', note: 'Lunch' },
+      { id: '2', amount: 20, category: 'Bills', date: '2026-09-02' },
     ]);
 
     expect(component.filteredExpenses().length).toBe(2);

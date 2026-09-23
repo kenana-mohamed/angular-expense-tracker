@@ -108,7 +108,7 @@ export class ExpenseListComponent {
     this.expenseService.setEditingExpense(expense);
   }
 
-  deleteExpense(id: number): void {
+  deleteExpense(id: string): void {
     if (window.confirm('Are you sure you want to delete this expense?')) {
       this.expenseService.deleteExpense(id);
     }

@@ -31,8 +31,9 @@ export class ExpenseService {
         this.expenses.set(
           expenses.map((expense) => ({
             ...expense,
-            // json-server may return ids as strings; normalize them to numbers.
-            id: Number(expense.id),
+            // json-server returns ids as strings (numeric or nanoid-generated);
+            // keep them as strings so DELETE/PUT URLs stay valid.
+            id: String(expense.id),
           })),
         );
         this.loading.set(false);
@@ -51,11 +52,11 @@ export class ExpenseService {
     });
   }
 
-  updateExpense(id: number, expense: Partial<Expense>): void {
+  updateExpense(id: string | number, expense: Partial<Expense>): void {
     this.loading.set(true);
     this.error.set(null);
 
-    this.http.put<Expense>(`${this.apiUrl}/${id}`, expense).subscribe({
+    this.http.put<Expense>(`${this.apiUrl}/${String(id)}`, expense).subscribe({
       next: () => {
         this.editingExpense.set(null);
         this.loadExpenses();
@@ -64,11 +65,13 @@ export class ExpenseService {
     });
   }
 
-  deleteExpense(id: number): void {
+  deleteExpense(id: string | number): void {
     this.loading.set(true);
     this.error.set(null);
 
-    this.http.delete<void>(`${this.apiUrl}/${id}`).subscribe({
+    // json-server matches the URL segment as a string against record ids, so
+    // coerce strictly to a string to avoid 404s (e.g. /expenses/NaN).
+    this.http.delete<void>(`${this.apiUrl}/${String(id)}`).subscribe({
       next: () => this.loadExpenses(),
       error: this.handleError('delete expense'),
     });

@@ -7,7 +7,7 @@ export type ExpenseCategory =
   | 'Other';
 
 export interface Expense {
-  id: number;
+  id: string;
   amount: number;
   category: ExpenseCategory;
   date: string;

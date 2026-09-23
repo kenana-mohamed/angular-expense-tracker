@@ -38,7 +38,7 @@ describe('AiChatbotService', () => {
 
     service
       .sendMessage('How much did I spend on food?', 'session-1', [
-        { id: 1, amount: 50, category: 'Food', date: '2026-09-01' },
+        { id: '1', amount: 50, category: 'Food', date: '2026-09-01' },
       ])
       .subscribe((result) => {
         response = result;
@@ -49,7 +49,7 @@ describe('AiChatbotService', () => {
     expect(request.request.body).toEqual({
       message: 'How much did I spend on food?',
       sessionId: 'session-1',
-      expenses: [{ id: 1, amount: 50, category: 'Food', date: '2026-09-01' }],
+      expenses: [{ id: '1', amount: 50, category: 'Food', date: '2026-09-01' }],
     });
 
     request.flush({ reply: 'You spent EGP 50 on food.' });

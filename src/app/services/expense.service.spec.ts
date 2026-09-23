@@ -29,7 +29,7 @@ describe('ExpenseService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('loads expenses and normalizes string ids to numbers', () => {
+  it('loads expenses and keeps ids as strings', () => {
     service.loadExpenses();
 
     const request = httpTesting.expectOne(environment.apiUrl);
@@ -45,7 +45,7 @@ describe('ExpenseService', () => {
     ]);
 
     expect(service.expenses().length).toBe(2);
-    expect(service.expenses()[0].id).toBe(1);
+    expect(service.expenses()[0].id).toBe('1');
     expect(service.expenses()[1].amount).toBe(25);
     expect(service.loading()).toBe(false);
     expect(service.error()).toBeNull();
@@ -79,7 +79,7 @@ describe('ExpenseService', () => {
       date: '2026-09-05',
       note: 'T-shirt',
     });
-    postRequest.flush({ id: 9, ...postRequest.request.body });
+    postRequest.flush({ id: '9', ...postRequest.request.body });
 
     // The service re-fetches the list after a successful POST.
     httpTesting.expectOne(environment.apiUrl).flush([]);
@@ -89,7 +89,7 @@ describe('ExpenseService', () => {
 
   it('sets and clears the editing expense via the helper', () => {
     const expense = {
-      id: 3,
+      id: '3',
       amount: 100,
       category: 'Food' as const,
       date: '2026-09-01',

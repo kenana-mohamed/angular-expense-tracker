@@ -101,3 +101,29 @@
     display: none;
   }
 }
+
+@media (max-width: 480px) {
+  .app-header-inner {
+    gap: 0.5rem 1rem;
+  }
+
+  .brand {
+    gap: 0.6rem;
+  }
+
+  .brand-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.15rem;
+  }
+
+  .brand-text h1 {
+    font-size: 1.1rem;
+  }
+
+  .header-summary {
+    align-items: flex-start;
+    width: 100%;
+    text-align: left;
+  }
+}

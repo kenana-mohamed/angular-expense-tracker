@@ -322,6 +322,18 @@ select option {
   }
 }
 
+@media (max-width: 768px) {
+  .section-header h2 {
+    font-size: 1.35rem;
+  }
+
+  .controls {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0.85rem;
+  }
+}
+
 @media (max-width: 600px) {
   .section-header {
     align-items: stretch;
@@ -330,23 +342,35 @@ select option {
 
   .running-total {
     align-items: flex-start;
+    width: 100%;
   }
 
   .controls {
-    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    padding: 0.8rem;
   }
 
   .expense-card {
     grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 0.85rem;
   }
 
   .expense-actions {
     grid-column: 2;
+    flex-wrap: wrap;
   }
 
   .expense-title-row {
     align-items: flex-start;
     flex-direction: column;
     gap: 0.15rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .expense-icon {
+    min-height: 2.5rem;
+    padding: 0.4rem 0.6rem;
   }
 }

@@ -272,6 +272,26 @@ app-expense-list {
   }
 }
 
+/* ----- Responsive: stack dashboard columns on tablet/mobile ---------------- */
+
+@media (max-width: 992px) {
+  .dashboard-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-main {
+    width: min(100% - 1.25rem, 1440px);
+    padding: 1.25rem 0 6.75rem;
+  }
+
+  .dashboard-layout {
+    gap: 1rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
